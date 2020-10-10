@@ -26,7 +26,6 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.io.IOException;
-import java.io.OutputStream;
 
 import org.apache.lucene.queryparser.flexible.standard.StandardQueryParser;
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
@@ -42,6 +41,7 @@ import java.text.DecimalFormat;
 import org.apache.lucene.document.FieldType.NumericType;
 import org.apache.lucene.index.SlowCompositeReaderWrapper;
 import org.apache.lucene.index.AtomicReader;
+
 import go.sptc.sinf.config.Config;
 
 public class IpedIndexService {
@@ -56,6 +56,7 @@ public class IpedIndexService {
     private int totalDocuments;
     private String casePath;
     private SleuthkitCase sleuthCase;
+    private Logger logger;
 
     public void setHitsPerPage(int value) {
         hitsPerPage = value;
@@ -65,7 +66,7 @@ public class IpedIndexService {
         hitsPerPage = totalDocuments;
     }
 
-    public IpedIndexService(String casePath) throws Exception {
+    public IpedIndexService(String casePath, Logger logger) throws Exception {
         this.casePath = casePath;
         // analyzer = new StandardAnalyzer(Version.LUCENE_4_9);
         analyzer = AppAnalyzer.get();
@@ -77,6 +78,7 @@ public class IpedIndexService {
         searcher = new IndexSearcher(reader);
 
         sleuthCase = SleuthkitCase.openCase(casePath + "\\sleuth.db");
+        this.logger = logger;
        
     }
 
@@ -213,23 +215,26 @@ public class IpedIndexService {
 
     }
 
-    public void exportFile(HashMap<String, Object> data, File destDir) {
+    public File exportFile(HashMap<String, Object> data, File destDir) {
         System.out.printf("Exportando arquivo \"%s\"\n", data.get("name"));
         if (!destDir.exists()) {
             destDir.mkdirs();
         }
+        
         String export = data.get("export").toString();
         String filename = data.get("name").toString();
         String path = data.get("path").toString();
         Long sleuthId = new Long(0);
+        File destFile = new File(destDir.getAbsolutePath(), filename);
         if(data.get("sleuthId") != null){
             sleuthId = Long.valueOf(data.get("sleuthId").toString());
         }
         if ((export != null) && (!export.isEmpty())) {
-            System.out.printf("%s é exportado\n", data.get("name"));
             try {
-                Files.copy(new File(casePath, export).toPath(), new File(destDir.getAbsolutePath(), filename).toPath());
+                Files.copy(new File(casePath, export).toPath(), destFile.toPath());
+                return destFile;
             } catch (IOException e) {
+                
                 System.out.printf("Não foi possível copiar o arquivo %s\n", export);
             }
         } else {
@@ -239,7 +244,7 @@ public class IpedIndexService {
                 int read = 0;
                 int bufferSize = 1024;
                 byte[] buf = new byte[bufferSize];
-                FileOutputStream os = new FileOutputStream(new File(destDir.getAbsolutePath(), filename));
+                FileOutputStream os = new FileOutputStream(destFile);
 
                 long total = 0;
                 long size = content.getSize();
@@ -250,11 +255,13 @@ public class IpedIndexService {
                 }
                 os.flush();
                 os.close();
+                return destFile;
             } catch (Exception e) {
-                e.printStackTrace();
-                System.out.printf("Não foi possível copiar o arquivo %s\n", path);
+                System.out.printf("Não foi possível copiar o arquivo \"{%s}\"\n", path);
+                // App.LOGGER.error("Não foi possível copiar o arquivo \"{}\"", path);
+                
             }
         }
-
+        return null;
     }
 }

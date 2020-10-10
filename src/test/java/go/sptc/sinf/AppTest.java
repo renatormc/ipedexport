@@ -4,17 +4,23 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-/**
- * Unit test for simple App.
- */
+import go.sptc.sinf.services.Logger;
+
+
+
 public class AppTest 
 {
-    /**
-     * Rigorous Test :-)
-     */
+    
     @Test
     public void shouldAnswerWithTrue()
     {
-        assertTrue( true );
+        Logger logger = new Logger("C:/temp/test2.log");
+        try{
+            logger.start();
+            logger.write("Testando mensagem do log");
+        }finally{
+            logger.close();
+        }
+    
     }
 }

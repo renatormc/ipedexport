@@ -70,7 +70,16 @@
       <artifactId>SparseBitSet</artifactId>
       <version>1.1</version>
     </dependency>
-
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+      <version>2.6.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>2.6.1</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -139,9 +148,9 @@
             <executable>java</executable>
             <mainClass>go.sptc.sinf.App</mainClass>
             <arguments>
-              <argument>-classpath</argument> 
+              <argument>-classpath</argument>
               <classpath />
-              <argument>go.sptc.sinf.App</argument>  
+              <argument>go.sptc.sinf.App</argument>
               <argument>-c</argument>
               <argument>H:\grupo_geccor\B10\processamento</argument>
               <argument>-d</argument>
