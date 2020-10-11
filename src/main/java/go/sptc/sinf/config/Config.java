@@ -63,6 +63,7 @@ public class Config {
             stream.forEach(s -> contentBuilder.append(s).append("\n"));
         } catch (IOException e) {
             e.printStackTrace();
+            System.exit(1);
         }
 
         return contentBuilder.toString();
