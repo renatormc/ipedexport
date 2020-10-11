@@ -46,17 +46,16 @@ import go.sptc.sinf.config.Config;
 
 public class IpedIndexService {
 
-    // private static IpedIndexService instance;
-    private IndexSearcher searcher;
-    private Analyzer analyzer;
+    private final IndexSearcher searcher;
+    private final Analyzer analyzer;
     private int hitsPerPage = 10;
-    private static Analyzer spaceAnalyzer = new WhitespaceAnalyzer(Version.LUCENE_4_9);
+    private static final Analyzer spaceAnalyzer = new WhitespaceAnalyzer(Version.LUCENE_4_9);
     private HashMap<String, NumericConfig> numericConfigMap;
-    private AtomicReader atomicReader;
-    private int totalDocuments;
-    private String casePath;
-    private SleuthkitCase sleuthCase;
-    private Logger logger;
+    private final AtomicReader atomicReader;
+    private final int totalDocuments;
+    private final String casePath;
+    private final SleuthkitCase sleuthCase;
+    private final Logger logger;
 
     public void setHitsPerPage(int value) {
         hitsPerPage = value;
@@ -79,7 +78,11 @@ public class IpedIndexService {
 
         sleuthCase = SleuthkitCase.openCase(casePath + "\\sleuth.db");
         this.logger = logger;
-       
+
+    }
+
+    public int getTotalDocuments() {
+        return totalDocuments;
     }
 
     private HashMap<String, NumericConfig> getNumericConfigMap() {
@@ -216,17 +219,17 @@ public class IpedIndexService {
     }
 
     public File exportFile(HashMap<String, Object> data, File destDir) {
-        System.out.printf("Exportando arquivo \"%s\"\n", data.get("name"));
+//        System.out.printf("Exportando arquivo \"%s\"\n", data.get("name"));
         if (!destDir.exists()) {
             destDir.mkdirs();
         }
-        
+
         String export = data.get("export").toString();
         String filename = data.get("name").toString();
         String path = data.get("path").toString();
         Long sleuthId = new Long(0);
         File destFile = new File(destDir.getAbsolutePath(), filename);
-        if(data.get("sleuthId") != null){
+        if (data.get("sleuthId") != null) {
             sleuthId = Long.valueOf(data.get("sleuthId").toString());
         }
         if ((export != null) && (!export.isEmpty())) {
@@ -234,8 +237,7 @@ public class IpedIndexService {
                 Files.copy(new File(casePath, export).toPath(), destFile.toPath());
                 return destFile;
             } catch (IOException e) {
-                
-                System.out.printf("Não foi possível copiar o arquivo %s\n", export);
+                logger.write(String.format("Não foi possível copiar o arquivo %s\n", export));
             }
         } else {
             try {
@@ -257,9 +259,7 @@ public class IpedIndexService {
                 os.close();
                 return destFile;
             } catch (Exception e) {
-                System.out.printf("Não foi possível copiar o arquivo \"{%s}\"\n", path);
-                // App.LOGGER.error("Não foi possível copiar o arquivo \"{}\"", path);
-                
+                logger.write(String.format("Não foi possível copiar o arquivo \"{%s}\"\n", path));
             }
         }
         return null;
