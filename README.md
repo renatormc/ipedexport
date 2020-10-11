@@ -2,7 +2,7 @@
 
 O Projeto utiliza maven como build system, é necessário ter ele instalado no sistema em momento de desenvolvimento   
 
-Em momento de desenvolvimento para rodar edite os parâmetros do plugin "org.codehaus.mojo:exec-maven-plugin" no arquivo pom.xml e execute run.bat  
+Em momento de desenvolvimento para rodar copie o arquivo run_example.bat e renomeie para run.bat. Modifique os seus dados e o execute
 
 ### A lib do sleuthkit tem de ser instalada em separado:
 
