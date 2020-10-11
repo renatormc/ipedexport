@@ -8,4 +8,6 @@ Em momento de desenvolvimento para rodar edite os parâmetros do plugin "org.cod
 
 - Criar uma pasta para ser repositório local de nome "local-maven-repo" e execitar p comando abaixo mudando o path do arquivo jar da lib:
 
-mvn deploy:deploy-file -DgroupId="org.sleuthkit" -DartifactId=datamodel -Dversion="4.6.5" -Durl=file:./local-maven-repo/ -DrepositoryId=local-maven-repo -DupdateReleaseInfo=true -Dfile=D:\projetos\sinf\ipedexport\lib\sleuthkit-4.6.5-p04.jar
+```bat
+mvn deploy:deploy-file -DgroupId="org.sleuthkit" -DartifactId=datamodel -Dversion="4.6.5" -Durl=file:./local-maven-repo/ -DrepositoryId=local-maven-repo -DupdateReleaseInfo=true -Dfile="%SINFTOOLS%\extras\iped\iped-3.17-snapshot\lib\sleuthkit-4.6.5-p04.jar"
+```

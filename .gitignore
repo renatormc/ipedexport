@@ -1,1 +1,7 @@
-
+local-maven-repo
+target
+.vscode
+.settings
+.factorypath
+.project
+.classpath
