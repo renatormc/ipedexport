@@ -34,11 +34,17 @@ public class Config {
 
     public static void init(Namespace ns) throws IOException, ClassNotFoundException{
         destFolder = ns.getString("dest");
+        System.out.printf("Diretório de destino: \"%s\"\n", destFolder);
         caseFolder = ns.getString("case");
+        System.out.printf("Diretório do caso: \"%s\"\n", caseFolder);
         limit = ns.getInt("limit");
+        System.out.printf("Limite: \"%d\"\n", limit);
         query = readQueryFile(ns.getString("query"));
+        System.out.printf("Query: \"%s\"\n", query);
         logsFolder = ns.getString("logsfolder");
+        System.out.printf("Pasta de logs: \"%s\"\n", logsFolder);
         hashType = ns.getString("hash");
+        System.out.printf("Tipo do hash: \"%s\"\n", hashType);
         File metadataTypesFile = new File(Config.class.getResource("/metadataTypes.txt").getFile());
         if (metadataTypesFile.exists()) {
             UTF8Properties props = new UTF8Properties();
