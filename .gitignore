@@ -1,0 +1,6 @@
+local-maven-repo
+.vscode
+.settings
+.factorypath
+.project
+.classpath
