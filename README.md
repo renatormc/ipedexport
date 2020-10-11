@@ -1,6 +1,6 @@
 # ipedexport
 
-1 - O Projeto utiliza maven como build system  
-2 - Para funcionar é necessário que a pasta que contém as DLLs do sleuthkit estejam no path do Windows  
-3- Para executar modifique os parametros de execução do arquivo pom.xml e utilize o comando:  
-   mvn exec:exec
+O Projeto utiliza maven como build system, é necessário ter ele instalado no sistema em momento de desenvolvimento   
+
+Em momento de desenvolvimento para rodar edite os parâmetros do plugin "org.codehaus.mojo:exec-maven-plugin" no arquivo pom.xml e execute run.bat  
+

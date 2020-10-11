@@ -78,14 +78,6 @@
   </dependencies>
 
   <build>
-    <!-- <resources>
-      <resource>
-        <directory>${basedir}/src/main/resources</directory>
-        <includes>
-          <include>**/*</include>
-        </includes>
-      </resource>
-    </resources> -->
     <pluginManagement>
       <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
@@ -147,15 +139,17 @@
               <classpath />
               <argument>go.sptc.sinf.App</argument>
               <argument>-c</argument>
-              <argument>H:\grupo_geccor\B10\processamento</argument>
+              <argument>D:\test\processamento</argument>
               <argument>-d</argument>
-              <argument>D:\temp\deletar</argument>
+              <argument>D:\test\deletar</argument>
               <argument>-q</argument>
-              <argument>H:\grupo_geccor\B10\processamento\query.txt</argument>
+              <argument>D:\test\processamento\query.txt</argument>
               <argument>-l</argument>
               <argument>50</argument>
+              <argument>--hash</argument>
+              <argument>NULL</argument>
             </arguments>
-            <workingDirectory>H:\grupo_geccor\B10\processamento</workingDirectory>
+            <workingDirectory>D:\test\processamento</workingDirectory>
           </configuration>
         </plugin>
       </plugins>
