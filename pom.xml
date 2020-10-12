@@ -123,17 +123,6 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>exec-maven-plugin</artifactId>
-          <version>1.2.1</version>
-          <configuration>
-              <!-- <mainClass>go.sptc.sinf.App</mainClass>
-              <arguments>
-                  
-              </arguments> -->
-          </configuration>
-      </plugin>
-        <!-- <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>exec-maven-plugin</artifactId>
           <version>1.3.2</version>
           <executions>
             <execution>
@@ -150,18 +139,18 @@
               <classpath />
               <argument>go.sptc.sinf.App</argument>
               <argument>-c</argument>
-              <argument>D:\test\processamento</argument>
+              <argument>H:\grupo_geccor\B10\processamento</argument>
               <argument>-d</argument>
-              <argument>D:\test\deletar</argument>
+              <argument>D:\temp\deletar</argument>
               <argument>-q</argument>
-              <argument>D:\test\processamento\query.txt</argument>
+              <argument>query.txt</argument>
               <argument>-l</argument>
               <argument>50</argument>
 
             </arguments>
-            <workingDirectory>D:\test\processamento</workingDirectory>
+            <workingDirectory>H:\grupo_geccor\B10\processamento</workingDirectory>
           </configuration>
-        </plugin> -->
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>

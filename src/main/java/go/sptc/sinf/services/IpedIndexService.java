@@ -237,6 +237,10 @@ public class IpedIndexService {
                 Files.copy(new File(casePath, export).toPath(), destFile.toPath());
                 return destFile;
             } catch (IOException e) {
+                if(Config.verbose){
+                    e.printStackTrace();
+                }
+                
                 logger.write(String.format("Não foi possível copiar o arquivo %s\n", export));
             }
         } else {
@@ -259,7 +263,10 @@ public class IpedIndexService {
                 os.close();
                 return destFile;
             } catch (Exception e) {
-                logger.write(String.format("Não foi possível copiar o arquivo \"{%s}\"\n", path));
+                if(Config.verbose){
+                    e.printStackTrace();
+                }
+                logger.write(String.format("Não foi possível copiar o arquivo \"%s\"\n", path));
             }
         }
         return null;

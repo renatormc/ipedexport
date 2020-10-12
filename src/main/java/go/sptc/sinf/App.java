@@ -3,6 +3,7 @@ package go.sptc.sinf;
 import java.io.IOException;
 import go.sptc.sinf.config.Config;
 import net.sourceforge.argparse4j.ArgumentParsers;
+import net.sourceforge.argparse4j.impl.Arguments;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
@@ -21,6 +22,8 @@ public class App {
         parser.addArgument("--hash").help("Hash algorithm").choices("NULL", "SHA-512", "SHA1", "MD5").setDefault("NULL").help("Hash type");
         parser.addArgument("-l", "--limit").type(Integer.class).setDefault(-1).help(
                 "Limit. Max number of files to export. Case negative all files that pass the filter specified at the query file will be exported");
+        parser.addArgument("-v", "--verbose").type(Boolean.class).help("Print debug information.").action(Arguments.storeTrue());
+
         Namespace ns = null;
         try {
             ns = parser.parseArgs(args);

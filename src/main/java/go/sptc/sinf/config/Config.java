@@ -24,6 +24,7 @@ public class Config {
     public static String query;
     public static String logsFolder;
     public static String hashType;
+    public static Boolean verbose;
 
     private static class StringComparator implements Comparator<String> {
         @Override
@@ -45,6 +46,8 @@ public class Config {
         System.out.printf("Pasta de logs: \"%s\"\n", logsFolder);
         hashType = ns.getString("hash");
         System.out.printf("Tipo do hash: \"%s\"\n", hashType);
+        verbose = ns.getBoolean("verbose");
+        System.out.printf("Verbose: \"%s\"\n", verbose);
         File metadataTypesFile = new File(Config.class.getResource("/metadataTypes.txt").getFile());
         if (metadataTypesFile.exists()) {
             UTF8Properties props = new UTF8Properties();
