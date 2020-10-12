@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="753.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="go.sptc.sinf.controllers.MainScreenController">
+    <children>
+        <TextField fx:id="texCaseFolder" layoutX="14.0" layoutY="49.0" prefHeight="25.0" prefWidth="638.0" text="H:\grupo_geccor\B10\processamento" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="60.0" />
+        <Button fx:id="btnChooseCaseFolder" layoutX="672.0" layoutY="49.0" mnemonicParsing="false" onAction="#chooseCaseFolder" text="..." AnchorPane.rightAnchor="25.0" />
+        <Label layoutX="19.0" layoutY="28.0" text="Pasta do caso" AnchorPane.leftAnchor="25.0" />
+        <TextField fx:id="texDestFolder" layoutX="14.0" layoutY="114.0" prefHeight="25.0" prefWidth="638.0" text="D:\temp\deletar" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="60.0" />
+        <Button fx:id="btnChooseDestFolder" layoutX="672.0" layoutY="114.0" mnemonicParsing="false" text="..." AnchorPane.rightAnchor="25.0" onAction="#chooseDestFolder" />
+        <Label layoutX="16.0" layoutY="89.0" text="Pasta de destino" AnchorPane.leftAnchor="25.0" />
+        <Spinner fx:id="spnLimit" editable="true" layoutX="24.0" layoutY="331.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="24.0">
+            <valueFactory>
+                <SpinnerValueFactory.IntegerSpinnerValueFactory max="10" min="-1" />
+            </valueFactory>
+        </Spinner>
+        <Label layoutX="25.0" layoutY="311.0" text="Limite" AnchorPane.bottomAnchor="103.0" AnchorPane.leftAnchor="25.0" />
+        <TextArea fx:id="txaQuery" layoutX="19.0" layoutY="168.0" prefHeight="137.0" prefWidth="677.0" text="isDir:false AND size:[* TO 5000]  AND category:(&quot;Scanned Documents&quot;, &quot;Spreedsheets&quot;) " AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="167.0" />
+        <Label layoutX="19.0" layoutY="149.0" text="Query" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="149.0" />
+        <ProgressBar fx:id="pgbProgress" layoutX="25.0" layoutY="419.0" prefHeight="18.0" prefWidth="710.0" progress="0.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
+
+        </ProgressBar>
+      <Button fx:id="btnStart" layoutX="645.0" layoutY="360.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="88.0" text="Executar" AnchorPane.bottomAnchor="79.0" AnchorPane.rightAnchor="25.0" onAction="#start"/>
+    </children>
+</AnchorPane>

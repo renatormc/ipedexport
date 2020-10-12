@@ -15,10 +15,11 @@ import java.util.HashMap;
 import go.sptc.sinf.config.Config;
 import go.sptc.sinf.services.IpedIndexService;
 import go.sptc.sinf.services.Logger;
+import javafx.concurrent.Task;
 import me.tongfei.progressbar.ProgressBar;
 import java.security.DigestInputStream;
 
-public class Copier {
+public class Copier extends Task<Void> {
     private final Logger copyLogger;
     private final Logger hashLogger;
     private OutputStreamWriter hashWriter;
@@ -28,12 +29,14 @@ public class Copier {
         hashLogger = new Logger("hash.log");
     }
 
-    public void run() {
+
+    @Override
+    protected Void call() throws Exception {
         try {
             copyLogger.start();
             hashLogger.start();
             hashWriter = new OutputStreamWriter(new FileOutputStream(Config.logsFolder + "/hash.txt"),
-                    Charset.forName("UTF-8").newEncoder());
+                    StandardCharsets.UTF_8.newEncoder());
             IpedIndexService ipedService = new IpedIndexService(Config.caseFolder, copyLogger);
             String queryString = Config.query;
             if (Config.limit > -1) {
