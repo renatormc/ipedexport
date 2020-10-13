@@ -1,27 +1,23 @@
 package go.sptc.sinf;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import go.sptc.sinf.config.Config;
 import go.sptc.sinf.services.IpedIndexService;
 import go.sptc.sinf.services.Logger;
 import me.tongfei.progressbar.ProgressBar;
-import java.security.DigestInputStream;
+
 
 public class Copier {
     private final Logger copyLogger;
     private final Logger hashLogger;
     private OutputStreamWriter hashWriter;
+    private OutputStreamWriter exportedWriter;
 
     public Copier() {
         copyLogger = new Logger("copy.log");
@@ -34,6 +30,9 @@ public class Copier {
             hashLogger.start();
             hashWriter = new OutputStreamWriter(new FileOutputStream(Config.logsFolder + "/hash.txt"),
                     Charset.forName("UTF-8").newEncoder());
+            exportedWriter = new OutputStreamWriter(new FileOutputStream(Config.logsFolder + "/exported.csv"),
+                    Charset.forName("UTF-8").newEncoder());
+            writeExportedHeader();
             IpedIndexService ipedService = new IpedIndexService(Config.caseFolder, copyLogger);
             String queryString = Config.query;
             if (Config.limit > -1) {
@@ -55,7 +54,8 @@ public class Copier {
 
                 destFile = ipedService.exportFile(hashMap, categoryFolder);
                 if (destFile != null) {
-                    calculateHash(destFile, hashMap.get("path").toString());
+                    // calculateHash(destFile, hashMap.get("path").toString());
+                    registerExported(hashMap, destFile);
                 }
             }
 
@@ -67,6 +67,12 @@ public class Copier {
             hashLogger.close();
             copyLogger.close();
             try {
+                exportedWriter.close();
+            } catch (IOException e1) {
+                System.out.println("Não foi possível fechar o arquivo csv de items");
+                e1.printStackTrace();
+            }
+            try {
                 hashWriter.close();
             } catch (IOException e) {
                 if(Config.verbose){
@@ -77,43 +83,52 @@ public class Copier {
         }
     }
 
-    private void calculateHash(File file, String originalPath) {
-        if (Config.hashType.equals("NULL")) {
-            return;
+   
+    private void writeExportedHeader(){
+        String row = String.join(",","Arquivo","SHA-256", "MD5", "Tamanho", "Categoria", "Caminho original");
+
+        try {
+            exportedWriter.write(row);
+            exportedWriter.write("\n");
+        } catch (IOException e) {
+            System.out.println(e.toString());
+            System.exit(1);
+        }
+        
+    }
+
+    private void registerExported(HashMap<String, Object> item, File destFile){
+        String sha256 = "";
+        String md5 = "";
+        String size = "";
+        String category = "";
+        String originalPath = "";
+        if (item.get("sha-256") != null){
+            sha256 = item.get("sha-256").toString();
+        }
+        if (item.get("md5") != null){
+            md5 = item.get("md5").toString();
+        }
+        if (item.get("size") != null){
+            size = item.get("size").toString();
+        }
+        if (item.get("category") != null){
+            category = item.get("category").toString();
+        }
+        if (item.get("path") != null){
+            originalPath = item.get("path").toString();
         }
         try {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            MessageDigest digest = MessageDigest.getInstance(Config.hashType);
-            DigestInputStream digestInputStream = new DigestInputStream(fileInputStream, digest);
-            byte[] bytes = new byte[1024];
-            // read all file content
-            while (digestInputStream.read(bytes) > 0)
-                ;
-
-            // digest = digestInputStream.getMessageDigest();
-            byte[] resultByteArry = digest.digest();
-            hashWriter.write(String.format("%s - %s\n", file,  bytesToHexString(resultByteArry)));
-            
-        } catch (IOException | NoSuchAlgorithmException e) {
-            if(Config.verbose){
-                e.printStackTrace();
-            }
-            hashLogger.write(String.format("Não foi possível calcular o hash do arquivo \"%s\"", originalPath));
+            String row = String.join(",", destFile.toString(),sha256, md5, size, category, originalPath);
+            exportedWriter.write(row);
+            exportedWriter.write("\n");
+            // exportedWriter.write(item.toString());
+            // exportedWriter.write("\n");
+        } catch (IOException e) {
+            copyLogger.write(String.format("Não foi possível registrar a copia do arquivo \"%s\"\n", destFile));
         }
     }
 
-    public static String bytesToHexString(byte[] bytes) {
-        StringBuilder sb = new StringBuilder();
-        for (byte b : bytes) {
-            int value = b & 0xFF;
-            if (value < 16) {
-                // if value less than 16, then it's hex String will be only
-                // one character, so we need to append a character of '0'
-                sb.append("0");
-            }
-            sb.append(Integer.toHexString(value).toUpperCase());
-        }
-        return sb.toString();
-    }
+   
 
 }

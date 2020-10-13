@@ -7,10 +7,10 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.Version;
 import org.sleuthkit.datamodel.Content;
 import org.sleuthkit.datamodel.SleuthkitCase;
-// import org.sleuthkit.datamodel.TskCoreException;
 import org.apache.lucene.search.IndexSearcher;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import org.apache.lucene.store.FSDirectory;
@@ -21,6 +21,7 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.ScoreDoc;
 
 import java.nio.file.Paths;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -133,7 +134,7 @@ public class IpedIndexService {
             return new MatchAllDocsQuery();
 
         else {
-            String[] fields = {"name", "content"};
+            String[] fields = { "name", "content" };
 
             StandardQueryParser parser = new StandardQueryParser(analyzer);
             parser.setMultiFields(fields);
@@ -219,7 +220,7 @@ public class IpedIndexService {
     }
 
     public File exportFile(HashMap<String, Object> data, File destDir) {
-//        System.out.printf("Exportando arquivo \"%s\"\n", data.get("name"));
+        // System.out.printf("Exportando arquivo \"%s\"\n", data.get("name"));
         if (!destDir.exists()) {
             destDir.mkdirs();
         }
@@ -236,12 +237,16 @@ public class IpedIndexService {
             try {
                 Files.copy(new File(casePath, export).toPath(), destFile.toPath());
                 return destFile;
+            } catch (FileNotFoundException e) {
+                logger.write(String.format("Não foi possível copiar o arquivo %s, arquivo não existente.\n", export));
+            } catch (FileAlreadyExistsException e) {
+                logger.write(String.format("Não foi possível copiar o arquivo %s, arquivo de destino já existe.\n", export));
             } catch (IOException e) {
-                if(Config.verbose){
+                if (Config.verbose) {
                     e.printStackTrace();
                 }
-                
-                logger.write(String.format("Não foi possível copiar o arquivo %s\n", export));
+
+                logger.write(String.format("Não foi possível copiar o arquivo %s, motivo não detectado.\n", export));
             }
         } else {
             try {
@@ -263,7 +268,7 @@ public class IpedIndexService {
                 os.close();
                 return destFile;
             } catch (Exception e) {
-                if(Config.verbose){
+                if (Config.verbose) {
                     e.printStackTrace();
                 }
                 logger.write(String.format("Não foi possível copiar o arquivo \"%s\"\n", path));
