@@ -20,3 +20,9 @@ Em momento de desenvolvimento para rodar copie o arquivo run_example.bat e renom
 ```bat
 mvn deploy:deploy-file -DgroupId="org.sleuthkit" -DartifactId=datamodel -Dversion="4.6.5" -Durl=file:./local-maven-repo/ -DrepositoryId=local-maven-repo -DupdateReleaseInfo=true -Dfile="%SINFTOOLS%\extras\iped\iped-3.17-snapshot\lib\sleuthkit-4.6.5-p04.jar"
 ```
+
+## Empacotar e gerar jar
+
+```bat
+mvn clean compile assembly:single
+```

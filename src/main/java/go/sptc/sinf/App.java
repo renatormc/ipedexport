@@ -18,6 +18,7 @@ public class App {
         switch (args[0]) {
             case "init":
                 Config.initDir();
+                System.out.println("Edite os arquivos \".ipedexport/config.ini\" e \".ipedexport/query.txt\" antes de executar a exportação.");
                 break;
             case "run":
                 Config.load();

@@ -15,6 +15,8 @@ import org.apache.commons.io.FileUtils;
 import org.ini4j.Ini;
 import org.ini4j.InvalidFileFormatException;
 
+import go.sptc.sinf.services.ResourceManager;
+
 public class Config {
 
     private static Map<String, Class> typesMap = Collections
@@ -83,8 +85,8 @@ public class Config {
             if (directory.exists()) {
                 FileUtils.deleteDirectory(directory);
             }
-            File dir = new File(Config.class.getResource("/.ipedexport").getFile());
-            FileUtils.copyDirectory(dir, directory);
+            directory.mkdir();
+            ResourceManager.copyInitFolder();            
 
         } catch (IOException e) {
             e.printStackTrace();
