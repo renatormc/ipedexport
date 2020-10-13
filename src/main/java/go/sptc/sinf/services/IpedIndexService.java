@@ -219,6 +219,10 @@ public class IpedIndexService {
 
     }
 
+    public static File getUniqueName(File file){
+        int i =1;
+    }
+
     public File exportFile(HashMap<String, Object> data, File destDir) {
         // System.out.printf("Exportando arquivo \"%s\"\n", data.get("name"));
         if (!destDir.exists()) {
@@ -240,7 +244,7 @@ public class IpedIndexService {
             } catch (FileNotFoundException e) {
                 logger.write(String.format("Não foi possível copiar o arquivo %s, arquivo não existente.\n", export));
             } catch (FileAlreadyExistsException e) {
-                logger.write(String.format("Não foi possível copiar o arquivo %s, arquivo de destino já existe.\n", export));
+                logger.write(String.format("Não foi possível copiar o arquivo %s, arquivo de destino já existe: %s.\n", export, destFile));
             } catch (IOException e) {
                 if (Config.verbose) {
                     e.printStackTrace();

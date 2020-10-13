@@ -156,9 +156,9 @@
               <argument>-classpath</argument>
               <classpath />
               <argument>go.sptc.sinf.App</argument>
-              <argument>init</argument>
+              <argument>run</argument>
             </arguments>
-            <workingDirectory>H:\grupo_geccor\B10\processamento</workingDirectory>
+            <workingDirectory>H:\grupo_geccor\Pendrives\processamento</workingDirectory>
           </configuration>
         </plugin>
       </plugins>
