@@ -1,5 +1,14 @@
 # ipedexport
 
+## Como funciona
+
+1- Abrir o terminal na pasta "processamento" do IPED  
+2- Iniciar com o comando "s-ipedexport init"  
+3- Alterar o arquivo .ipedexport/config.ini e .ipedexport/query  
+4- Executar a exportação com o comando "s-ipedexport run"  
+
+## Desenvolvimento 
+
 O Projeto utiliza maven como build system, é necessário ter ele instalado no sistema em momento de desenvolvimento   
 
 Em momento de desenvolvimento para rodar copie o arquivo run_example.bat e renomeie para run.bat. Modifique os seus dados e o execute
