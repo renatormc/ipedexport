@@ -35,6 +35,7 @@ mvn deploy:deploy-file -DgroupId="org.sleuthkit" -DartifactId=datamodel -Dversio
 ```
 
 ## Empacotar e gerar jar
+Após estar tudo certo e pronto para finalizar utilize o comando abaixo para gerar um arquivo jar com todas as dependências iclusas.
 
 ```bat
 mvn clean compile assembly:single
