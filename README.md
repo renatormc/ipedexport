@@ -11,7 +11,7 @@
 
 ### Configuração do VSCode
 1- Intale o plugin do Java  
-2- Instale o java SDK 11   
+2- Instale o java JDK 11   
 3- Adicione o caminho da pasta do jdk nas configurações do VSCode   
 ```json
 {
