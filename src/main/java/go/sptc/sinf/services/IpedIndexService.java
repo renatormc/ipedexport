@@ -121,7 +121,6 @@ public class IpedIndexService {
             }
 
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -219,21 +218,17 @@ public class IpedIndexService {
 
     }
 
-    public static File getUniqueName(File file){
-        int i =1;
-    }
-
-    public File exportFile(HashMap<String, Object> data, File destDir) {
+     
+    public File exportFile(HashMap<String, Object> data, File destFile) {
         // System.out.printf("Exportando arquivo \"%s\"\n", data.get("name"));
-        if (!destDir.exists()) {
-            destDir.mkdirs();
-        }
+       
+
 
         String export = data.get("export").toString();
-        String filename = data.get("name").toString();
+        // String filename = data.get("name").toString();
         String path = data.get("path").toString();
         Long sleuthId = new Long(0);
-        File destFile = new File(destDir.getAbsolutePath(), filename);
+        // File destFile = new File(destDir.getAbsolutePath(), filename);
         if (data.get("sleuthId") != null) {
             sleuthId = Long.valueOf(data.get("sleuthId").toString());
         }
@@ -263,10 +258,15 @@ public class IpedIndexService {
 
                 long total = 0;
                 long size = content.getSize();
-                while (total < size) {
-                    read = content.read(buf, total, bufferSize);
+                long size2 = Long.parseLong(data.get("size").toString());
+              
+                while (total < size2) {
+                    read = content.read(buf, total, bufferSize);   
+                    if(read == 0)        
+                        break;
                     os.write(buf, 0, read);
                     total += read;
+                    // System.out.printf("Tamanho exportado: %d\n", total);
                 }
                 os.flush();
                 os.close();

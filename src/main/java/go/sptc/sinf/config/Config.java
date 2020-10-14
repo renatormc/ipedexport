@@ -3,7 +3,9 @@ package go.sptc.sinf.config;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Collections;
@@ -68,6 +70,10 @@ public class Config {
             caseFolder = ".";
             query = readQueryFile("./.ipedexport/query.txt");
             System.out.printf("Query: %s\n", query);
+            if(!isDirEmpty(Paths.get(destFolder))){
+                System.out.printf("O diretório \"%s\" não está vazio.\n", destFolder);
+                System.exit(1);
+            }
         } catch (InvalidFileFormatException e) {
             System.out.println("Formato do arquivo config.ini é inválido");
             System.exit(1);
@@ -91,6 +97,12 @@ public class Config {
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
+        }
+    }
+
+    private static boolean isDirEmpty(final Path directory) throws IOException {
+        try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(directory)) {
+            return !dirStream.iterator().hasNext();
         }
     }
 }
