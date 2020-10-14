@@ -11,7 +11,10 @@
 
 O Projeto utiliza maven como build system, é necessário ter ele instalado no sistema em momento de desenvolvimento   
 
-Em momento de desenvolvimento para rodar copie o arquivo run_example.bat e renomeie para run.bat. Modifique os seus dados e o execute
+Em momento de desenvolvimento para rodar edite a parte do arquivo pom.xml relacionada a execução inserindo a pasta do processamento do iped e depoi utilize o comando:
+```bat
+mvn exec:exec
+```
 
 ### A lib do sleuthkit tem de ser instalada em separado:
 
