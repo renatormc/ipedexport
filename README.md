@@ -9,9 +9,19 @@
 
 ## Desenvolvimento 
 
+### Configuração do VSCode
+1- Intale o plugin do Java 
+2- Instale o java SDK 11
+3- Adicione o caminho da pasta do jdk nas configurações do VSCode
+```json
+{
+  "java.home": "C:\\Program Files\\Java\\jdk-11.0.8",
+}
+```
+
 O Projeto utiliza maven como build system, é necessário ter ele instalado no sistema em momento de desenvolvimento   
 
-Em momento de desenvolvimento para rodar edite a parte do arquivo pom.xml relacionada a execução inserindo a pasta do processamento do iped e depoi utilize o comando:
+Em momento de desenvolvimento para rodar edite a parte do arquivo pom.xml relacionada a execução inserindo a pasta do processamento do iped e depois utilize o comando:
 ```bat
 mvn exec:exec
 ```
