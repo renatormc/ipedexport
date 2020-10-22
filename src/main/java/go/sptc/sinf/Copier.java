@@ -74,15 +74,15 @@ public class Copier {
             copyLogger.write("Iniciando os trabalhos");
 
             for (HashMap<String, Object> hashMap : ProgressBar.wrap(data, "TaskName")) {
-                if (hashMap.get("category") == null) {
+                if (hashMap.get("categoria") == null) {
                     continue;
                 }
-                categoryFolder = new File(Config.destFolder, hashMap.get("category").toString());
+                categoryFolder = new File(Config.destFolder, hashMap.get("categoria").toString());
 
                 if (!categoryFolder.exists()) {
                     categoryFolder.mkdirs();
                 }
-                destFile = getAvailableFilename(hashMap.get("name").toString(), categoryFolder);
+                destFile = getAvailableFilename(hashMap.get("nome").toString(), categoryFolder);
                 destFile = ipedService.exportFile(hashMap, destFile);
                 if (destFile != null) {
                     // calculateHash(destFile, hashMap.get("path").toString());
@@ -144,26 +144,26 @@ public class Copier {
         if (item.get("md5") != null) {
             md5 = item.get("md5").toString();
         }
-        if (item.get("size") != null) {
-            size = item.get("size").toString();
+        if (item.get("tamanho") != null) {
+            size = item.get("tamanho").toString();
         }
-        if (item.get("category") != null) {
-            category = item.get("category").toString();
+        if (item.get("categoria") != null) {
+            category = item.get("categoria").toString();
         }
-        if (item.get("path") != null) {
-            originalPath = item.get("path").toString();
+        if (item.get("caminho") != null) {
+            originalPath = item.get("caminho").toString();
         }
-        if (item.get("deleted") != null) {
-            deleted = item.get("deleted").toString();
+        if (item.get("deletado") != null) {
+            deleted = item.get("deletado").toString();
         }
         if (item.get("carved") != null) {
             carved = item.get("carved").toString();
         }
-        if (item.get("created") != null) {
-            created = item.get("created").toString();
+        if (item.get("criacao") != null) {
+            created = item.get("criacao").toString();
         }
-        if (item.get("modified") != null) {
-            modified = item.get("modified").toString();
+        if (item.get("modificacao") != null) {
+            modified = item.get("modificacao").toString();
         }
         try {
             String row = String.join(",", destFolderPath.relativize(destFile.toPath()).toString().replace("\\", "/"),

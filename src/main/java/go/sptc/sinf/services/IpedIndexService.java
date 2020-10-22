@@ -1,5 +1,6 @@
 package go.sptc.sinf.services;
 
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.index.DirectoryReader;
@@ -50,7 +51,7 @@ public class IpedIndexService {
     private final IndexSearcher searcher;
     private final Analyzer analyzer;
     private int hitsPerPage = 10;
-    private static final Analyzer spaceAnalyzer = new WhitespaceAnalyzer(Version.LUCENE_4_9);
+    //private static final Analyzer spaceAnalyzer = new StandardAnalyzer(Version.LUCENE_4_9);
     private HashMap<String, NumericConfig> numericConfigMap;
     private final AtomicReader atomicReader;
     private final int totalDocuments;
@@ -68,8 +69,8 @@ public class IpedIndexService {
 
     public IpedIndexService(String casePath, Logger logger) throws Exception {
         this.casePath = casePath;
-        // analyzer = new StandardAnalyzer(Version.LUCENE_4_9);
-        analyzer = AppAnalyzer.get();
+        analyzer = new StandardAnalyzer(Version.LUCENE_4_9);
+        //analyzer = AppAnalyzer.get();
         Path pathImage = Paths.get(casePath, "indexador\\index");
         Directory directory = FSDirectory.open(new File(pathImage.toString()));
         IndexReader reader = DirectoryReader.open(directory);
@@ -146,15 +147,18 @@ public class IpedIndexService {
 
             // remove acentos, pois StandardQueryParser nÃ£o normaliza wildcardQueries
 
-            if (analyzer != spaceAnalyzer) {
-                char[] input = texto.toCharArray();
-                char[] output = new char[input.length * 4];
-                FastASCIIFoldingFilter.foldToASCII(input, 0, output, 0, input.length);
-                texto = (new String(output)).trim();
-            }
+//            if (analyzer != spaceAnalyzer) {
+//                char[] input = texto.toCharArray();
+//                char[] output = new char[input.length * 4];
+//                FastASCIIFoldingFilter.foldToASCII(input, 0, output, 0, input.length);
+//                texto = (new String(output)).trim();
+//            }
 
             try {
-                return parser.parse(texto, null);
+
+                Query p = parser.parse(texto, null);
+                System.out.println(p);
+                return p;
             } catch (org.apache.lucene.queryparser.flexible.core.QueryNodeException e) {
                 throw new QueryNodeException(e);
             }
@@ -187,6 +191,9 @@ public class IpedIndexService {
         ArrayList<String> fieldList = new ArrayList<String>();
         ArrayList<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
         Query q = getQuery(querystr);
+        System.out.println(q.toString());
+
+
         TopDocs docs = searcher.search(q, hitsPerPage);
         ScoreDoc[] hits = docs.scoreDocs;
 
@@ -226,7 +233,7 @@ public class IpedIndexService {
 
         String export = data.get("export").toString();
         // String filename = data.get("name").toString();
-        String path = data.get("path").toString();
+        String path = data.get("caminho").toString();
         Long sleuthId = new Long(0);
         // File destFile = new File(destDir.getAbsolutePath(), filename);
         if (data.get("sleuthId") != null) {
@@ -258,7 +265,7 @@ public class IpedIndexService {
 
                 long total = 0;
                 long size = content.getSize();
-                long size2 = Long.parseLong(data.get("size").toString());
+                long size2 = Long.parseLong(data.get("tamanho").toString());
               
                 while (total < size2) {
                     read = content.read(buf, total, bufferSize);   
