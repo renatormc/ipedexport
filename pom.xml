@@ -158,7 +158,7 @@
               <argument>go.sptc.sinf.App</argument>
               <argument>export</argument>
             </arguments>
-            <workingDirectory>D:\test\processamento_pasta</workingDirectory>
+            <workingDirectory>H:\grupo_geccor\B12\processamento</workingDirectory>
           </configuration>
         </plugin>
       </plugins>
@@ -167,7 +167,8 @@
   <repositories>
     <repository>
       <id>local-maven-repo</id>
-      <url>file:///${project.basedir}/local-maven-repo</url>
+      <url>file://${project.basedir}/local-maven-repo</url>
+      <!-- <url>file:///D:/projetos/ipedexport/local-maven-repo</url> -->
     </repository>
   </repositories>
 
