@@ -80,8 +80,10 @@ public class IpedIndexService {
 
         if(Config.hasDB){
             sleuthCase = SleuthkitCase.openCase(casePath + "\\sleuth.db");
+            System.out.printf("Abrindo sleuth case DB\n");
         }else{
             sleuthCase = null;
+            System.out.printf("sleuth.db não existe, caso sem imagem.\n");
         }
         
         this.logger = logger;

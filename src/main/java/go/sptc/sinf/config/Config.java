@@ -78,6 +78,7 @@ public class Config {
             if(!(new File(caseFolder, "sleuth.db").exists())){
                 hasDB = false;
             }
+            
         } catch (InvalidFileFormatException e) {
             System.out.println("Formato do arquivo config.ini é inválido");
             System.exit(1);
