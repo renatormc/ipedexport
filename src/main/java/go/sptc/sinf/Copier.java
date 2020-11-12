@@ -9,11 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import com.mchange.io.FileUtils;
-
 import org.apache.commons.io.FilenameUtils;
-
 import go.sptc.sinf.config.Config;
 import go.sptc.sinf.services.IpedIndexService;
 import go.sptc.sinf.services.Logger;
@@ -21,14 +17,11 @@ import me.tongfei.progressbar.ProgressBar;
 
 public class Copier {
     private final Logger copyLogger;
-    private final Logger hashLogger;
-    private OutputStreamWriter hashWriter;
     private OutputStreamWriter exportedWriter;
     private Path destFolderPath;
 
     public Copier() {
         copyLogger = new Logger("copy.log");
-        hashLogger = new Logger("hash.log");
     }
 
     private File getAvailableFilename(String filename, File folder) {
@@ -53,9 +46,6 @@ public class Copier {
         File destFile;
         try {
             copyLogger.start();
-            hashLogger.start();
-            hashWriter = new OutputStreamWriter(new FileOutputStream(Config.logsFolder + "/hash.txt"),
-                    Charset.forName("UTF-8").newEncoder());
             exportedWriter = new OutputStreamWriter(new FileOutputStream(Config.logsFolder + "/exported.csv"),
                     Charset.forName("UTF-8").newEncoder());
             destFolderPath = Paths.get(Config.destFolder);
@@ -95,7 +85,6 @@ public class Copier {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            hashLogger.close();
             copyLogger.close();
             try {
                 exportedWriter.close();
@@ -103,14 +92,7 @@ public class Copier {
                 System.out.println("Não foi possível fechar o arquivo csv de items");
                 e1.printStackTrace();
             }
-            try {
-                hashWriter.close();
-            } catch (IOException e) {
-                if (Config.verbose) {
-                    e.printStackTrace();
-                }
-                hashLogger.write("Não foi possível fechar o arquivo de hashes");
-            }
+          
         }
     }
 

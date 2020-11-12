@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.io.IOException;
 
 import org.apache.lucene.queryparser.flexible.standard.StandardQueryParser;
-import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
+// import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.document.DateTools;
@@ -78,7 +78,12 @@ public class IpedIndexService {
         atomicReader = SlowCompositeReaderWrapper.wrap(reader);
         searcher = new IndexSearcher(reader);
 
-        sleuthCase = SleuthkitCase.openCase(casePath + "\\sleuth.db");
+        if(Config.hasDB){
+            sleuthCase = SleuthkitCase.openCase(casePath + "\\sleuth.db");
+        }else{
+            sleuthCase = null;
+        }
+        
         this.logger = logger;
 
     }

@@ -30,6 +30,7 @@ public class Config {
     public static String query;
     public static String logsFolder = "./.ipedexport";
     public static Boolean verbose;
+    public static Boolean hasDB = true;
 
     private static class StringComparator implements Comparator<String> {
         @Override
@@ -73,6 +74,9 @@ public class Config {
             if(!isDirEmpty(Paths.get(destFolder))){
                 System.out.printf("O diretório \"%s\" não está vazio.\n", destFolder);
                 System.exit(1);
+            }
+            if(!(new File(caseFolder, "sleuth.db").exists())){
+                hasDB = false;
             }
         } catch (InvalidFileFormatException e) {
             System.out.println("Formato do arquivo config.ini é inválido");

@@ -1,1 +1,0 @@
-isDir:false AND size:[* TO 5000]  AND category:("Scanned Documents", "Spreedsheets") 
