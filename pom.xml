@@ -158,7 +158,7 @@
               <argument>go.sptc.sinf.App</argument>
               <argument>export</argument>
             </arguments>
-            <workingDirectory>H:\grupo_geccor\B12\processamento</workingDirectory>
+            <workingDirectory>D:\test\processamento</workingDirectory>
           </configuration>
         </plugin>
       </plugins>

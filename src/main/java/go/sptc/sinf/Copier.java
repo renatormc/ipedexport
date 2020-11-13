@@ -59,7 +59,7 @@ public class Copier {
                 ipedService.setHitsPerPageAsTotal();
             }
 
-            ArrayList<HashMap<String, Object>> data = ipedService.query(queryString, "*");
+            ArrayList<HashMap<String, Object>> data = ipedService.query(queryString, "sleuthId, categoria, export, nome, sha-256, md5, tamanho, caminho, deletado, carved, criacao, modificacao");
 
             copyLogger.write("Iniciando os trabalhos");
 

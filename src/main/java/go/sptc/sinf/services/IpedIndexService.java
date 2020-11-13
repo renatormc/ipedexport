@@ -271,7 +271,7 @@ public class IpedIndexService {
                 FileOutputStream os = new FileOutputStream(destFile);
 
                 long total = 0;
-                long size = content.getSize();
+                // long size = content.getSize();
                 long size2 = Long.parseLong(data.get("tamanho").toString());
               
                 while (total < size2) {
