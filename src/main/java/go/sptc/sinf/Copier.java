@@ -59,7 +59,8 @@ public class Copier {
                 ipedService.setHitsPerPageAsTotal();
             }
 
-            ArrayList<HashMap<String, Object>> data = ipedService.query(queryString, "sleuthId, categoria, export, nome, sha-256, md5, tamanho, caminho, deletado, carved, criacao, modificacao");
+            ArrayList<HashMap<String, Object>> data = ipedService.query(queryString,
+                    "sleuthId, categoria, export, nome, sha-256, md5, tamanho, caminho, deletado, carved, criacao, modificacao");
 
             copyLogger.write("Iniciando os trabalhos");
 
@@ -67,7 +68,7 @@ public class Copier {
                 String category;
                 if (hashMap.get("categoria") == null) {
                     category = "Outros";
-                }else{
+                } else {
                     category = hashMap.get("categoria").toString();
                 }
                 categoryFolder = new File(Config.destFolder, category);
@@ -95,7 +96,7 @@ public class Copier {
                 System.out.println("Não foi possível fechar o arquivo csv de items");
                 e1.printStackTrace();
             }
-          
+
         }
     }
 
