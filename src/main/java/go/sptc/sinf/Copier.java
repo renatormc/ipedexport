@@ -156,7 +156,7 @@ public class Copier {
                     sha256, md5, size, category, originalPath, deleted, carved, created, modified);
             exportedWriter.write(row);
             exportedWriter.write("\n");
-        } catch (IOException e) {
+        } catch (Exception e) {
             copyLogger.write(String.format("Não foi possível registrar a copia do arquivo \"%s\"\n", destFile));
         }
     }
