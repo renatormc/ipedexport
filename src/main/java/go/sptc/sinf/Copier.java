@@ -13,6 +13,7 @@ import org.apache.commons.io.FilenameUtils;
 import go.sptc.sinf.config.Config;
 import go.sptc.sinf.services.IpedIndexService;
 import go.sptc.sinf.services.Logger;
+import go.sptc.sinf.services.Translator;
 import me.tongfei.progressbar.ProgressBar;
 
 public class Copier {
@@ -62,7 +63,7 @@ public class Copier {
             ArrayList<HashMap<String, Object>> data = ipedService.query(queryString,
                     "sleuthId, categoria, export, nome, sha-256, md5, tamanho, caminho, deletado, carved, criacao, modificacao");
 
-            copyLogger.write("Iniciando os trabalhos");
+            copyLogger.write("Iniciando exportação de arquivos");
 
             for (HashMap<String, Object> hashMap : ProgressBar.wrap(data, "TaskName")) {
                 String category;
@@ -70,6 +71,7 @@ public class Copier {
                     category = "Outros";
                 } else {
                     category = hashMap.get("categoria").toString();
+                    category = Translator.translateCatFolder(category);
                 }
                 categoryFolder = new File(Config.destFolder, category);
 

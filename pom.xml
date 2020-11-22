@@ -156,7 +156,7 @@
               <argument>-classpath</argument>
               <classpath />
               <argument>go.sptc.sinf.App</argument>
-              <argument>export</argument>
+              <argument>init</argument>
             </arguments>
             <workingDirectory>D:\test\processamento</workingDirectory>
           </configuration>
